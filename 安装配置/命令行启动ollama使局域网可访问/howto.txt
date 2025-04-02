@@ -1,0 +1,29 @@
+给脚本添加执行权限并运行：
+
+chmod +x start-ollama.sh
+./start-ollama.sh
+如果你想要在后台运行：
+
+nohup OLLAMA_HOST=0.0.0.0 ollama serve > ollama.log 2>&1 &
+验证步骤：
+
+
+# 检查是否正在监听所有接口
+ss -tlnp | grep ollama
+
+# 测试本地访问
+curl http://localhost:11434/api/tags
+
+# 获取你的 IP 地址
+ip addr show | grep -w inet
+其他机器可以通过 http://你的IP:11434 来访问。
+
+额外建议：
+
+最好在运行前确保防火墙已经允许 11434 端口
+如果你需要经常使用这个配置，可以将环境变量添加到你的 shell 配置文件中（~/.bashrc 或 ~/.zshrc）：
+
+echo 'export OLLAMA_HOST=0.0.0.0' >> ~/.bashrc
+echo 'export OLLAMA_ORIGINS="*"' >> ~/.bashrc
+source ~/.bashrc
+这样每次直接运行 ollama serve 就会自动监听所有接口。

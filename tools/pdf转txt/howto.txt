@@ -1,0 +1,22 @@
+首先确保安装了必要的工具：
+
+# 安装 poppler-utils（包含 pdftotext）
+sudo dnf install poppler-utils
+
+# 安装 python3（如果还没安装）
+sudo dnf install python3
+创建并运行脚本：
+
+# 创建脚本文件
+nano pdf2txt_chinese.py
+
+# 复制上面的代码到文件中，保存并退出
+
+# 添加执行权限
+chmod +x pdf2txt_chinese.py
+
+# 运行脚本
+./pdf2txt_chinese.py
+或者直接用 Python 运行：
+
+python3 pdf2txt_chinese.py

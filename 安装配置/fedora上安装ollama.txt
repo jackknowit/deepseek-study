@@ -1,0 +1,64 @@
+DeepSeek本地布署
+硬件配置：
+16GB RAM，无独立显卡，50GB硬盘空间
+
+推荐安装以下DeepSeek模型：
+deepseek-coder:1.3b 这是最小的DeepSeek代码模型，具有以下特点：
+内存需求较低（约4-5GB）
+适合CPU运行
+主要用于代码生成和理解
+deepseek-r1:1.5b 这是较小的基础模型版本：
+内存需求适中（约6-7GB）
+可以在CPU上运行
+适合一般对话和文本生成任务
+
+安装步骤：
+1.首先在Fedora上安装Ollama：
+
+curl -fsSL https://ollama.com/install.sh | sh
+2.启动Ollama服务：
+
+systemctl --user start ollama
+3.下载并运行模型（选择其中一个）：
+
+ollama pull deepseek-coder:1.3b
+4.或者基础对话模型
+
+ollama pull deepseek-r1:1.5b
+
+再拉取嵌入模型:
+ollama pull bge-m3
+
+使用建议：
+1.由于使用CPU运行，响应速度会比较慢，请耐心等待
+2.建议配置swap空间以防内存不足：
+
+#创建16GB的swap文件（建议）
+sudo fallocate -l 16G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+3.使用模型时的内存管理建议：
+
+关闭不必要的应用程序
+避免同时运行多个大型程序
+如果遇到内存不足，可以尝试使用 --ram 参数限制内存使用：
+ollama run deepseek-r1:1.5b --ram 8000
+需要注意的是：
+
+1.首次运行可能需要一些时间来下载模型
+2.CPU推理速度会较慢，每次响应可能需要几秒到几十秒不等
+3.如果遇到内存不足的情况，可以尝试增加swap空间或减少其他程序的内存占用
+
+
+安装结果示例：
+>>> Adding ollama user to render group...
+>>> Adding ollama user to video group...
+>>> Adding current user to ollama group...
+>>> Creating ollama systemd service...
+>>> Enabling and starting ollama service...
+Created symlink '/etc/systemd/system/default.target.wants/ollama.service' → '/etc/systemd/system/ollama.service'.
+>>> The Ollama API is now available at 127.0.0.1:11434.
+>>> Install complete. Run "ollama" from the command line.
+WARNING: No NVIDIA/AMD GPU detected. Ollama will run in CPU-only mode.
+

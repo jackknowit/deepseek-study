@@ -1,0 +1,33 @@
+# 1. 首先安装必要的包
+pip install langchain-ollama chromadb
+
+# 2. 准备目录结构：
+mkdir medical_records
+mkdir medical_knowledge_base
+
+# 3. 将病历文件放入medical_records目录，例如：
+# medical_records/
+#   ├── patient_a123.txt
+#   └── ...
+
+# 4. 首先导入数据：
+python import_medical_records.py
+
+# 5. 启动查询程序：
+python query_medical_records.py
+
+
+在Ollama命令行中查询：
+# 启动Ollama交互式会话
+ollama run deepseek-r1:1.5b
+
+# 在提示符后输入：
+分析就诊主键为a123的患者就诊，给出推荐的治疗方案
+
+性能优化：
+# 在 MedicalRecordImporter 中可以调整这些参数：
+self.text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,  # 根据病历长度调整
+    chunk_overlap=200,  # 保证上下文连贯性
+    separators=["\n\n", "\n", "。", "，", " ", ""]  # 适合中文病历的分隔符
+)
